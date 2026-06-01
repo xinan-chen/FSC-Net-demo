@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="FSC-Net: Integrating Fast Fourier Convolutions and Progressive Learning for Speech Bandwidth Extension">
+    <meta name="author" content="Xinan Chen, Xiaobin Rong, Qinwen Hu, Kai Chen, and Jing Lu">
+
+    <title>FSC-Net: Integrating Fast Fourier Convolutions and Progressive Learning for Speech Bandwidth Extension</title>
+
+    <!-- 引入Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 引入CSS文件 -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- 页头 -->
+    <div class="header">
+        <h1>FSC-Net: Integrating Fast Fourier Convolutions and<br>Progressive Learning for Speech Bandwidth Extension</h1>
+        <div class="authors">
+            Xinan Chen, Xiaobin Rong, Qinwen Hu, Kai Chen, and Jing Lu
+        </div>
+        <div class="affiliations">
+            Key Laboratory of Modern Acoustics, Nanjing University<br>
+            NJU-Horizon Intelligent Audio Lab, Horizon Robotics
+        </div>
+    </div>
+
+    <!-- Abstract Section -->
+    <div class="narrow-container">
+        <div class="abstract-section">
+            <h2>Abstract</h2>
+            <div class="abstract-content">
+                <div class="abstract-text">
+                    <p>Speech bandwidth extension (BWE) aims to reconstruct high-fidelity wideband audio from narrowband inputs. While recent approaches have made significant progress, they often struggle to reconstruct realistic high-frequency phase and harmonic structures, leading to perceptual artifacts. In this paper, we propose <strong>FSC-Net</strong> (Full-Spectrum Context Network), a parameter-efficient architecture designed to explicitly model cross-band harmonic dependencies.</p>
+                    
+                    <p>By integrating Fast Fourier Convolutions (FFCs) into a complex spectral mapping framework, FSC-Net expands its receptive field to the entire spectrum, capturing long-range frequency interactions effectively. To address the ill-posed nature of high-frequency generation, our novel frequency-progressive learning curriculum guides the network to reconstruct spectral details from coarse to fine. Experimental results on the VCTK and unseen EARS datasets demonstrate that FSC-Net delivers consistently strong reconstruction quality and generalization, particularly in the challenging VCTK 4 kHz-to-48 kHz task.</p>
+                    
+                    <p><strong>Keywords:</strong> speech bandwidth extension, generative adversarial network, progressive learning, audio super-resolution</p>
+                </div>
+                <div class="framework-image">
+                    <img src="model_framework.png" alt="Model Framework">
+                    <div class="image-caption">Figure 1: Overall architecture of the proposed framework.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Demos Section -->
+    <div class="narrow-container">
+        <div class="section-title">Audio Demos</div>
+        
+<!-- REPLACEMENT -->
+        <div class="file-section">
+            <div class="file-header">
+                <div class="file-title">Audio Sample</div>
+            </div>
+            
+            <div class="audio-grid">
+                <div class="audio-card">
+                    <div class="card-title">Unprocessed</div>
+                    <div class="card-image">
+                        <img src="audio_figs/Unprocessed.png" alt="Unprocessed">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/Unprocessed.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">AERO</div>
+                    <div class="card-image">
+                        <img src="audio_figs/AERO.png" alt="AERO">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/AERO.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">APBWE</div>
+                    <div class="card-image">
+                        <img src="audio_figs/APBWE.png" alt="APBWE">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/APBWE.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="audio-grid second-row">
+                <div class="audio-card">
+                    <div class="card-title">BAENet</div>
+                    <div class="card-image">
+                        <img src="audio_figs/BAENet.png" alt="BAENet">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/BAENet.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Ours</div>
+                    <div class="card-image">
+                        <img src="audio_figs/Ours.png" alt="Ours">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/Ours.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Target (Clean)</div>
+                    <div class="card-image">
+                        <img src="audio_figs/Target.png" alt="Target">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/Target.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
