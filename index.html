@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -26,6 +26,13 @@
             Key Laboratory of Modern Acoustics, Nanjing University<br>
             NJU-Horizon Intelligent Audio Lab, Horizon Robotics
         </div>
+        <div class="link-buttons">
+            <a class="link-button" href="" aria-label="arXiv paper link">arXiv</a>
+            <span class="link-button-block">
+                <a class="link-button disabled" href="" aria-label="GitHub source code link">GitHub</a>
+                <span class="link-note">The source code will be released upon acceptance of the paper.</span>
+            </span>
+        </div>
     </div>
 
     <!-- Abstract Section -->
@@ -50,96 +57,113 @@
 
     <!-- Audio Demos Section -->
     <div class="narrow-container">
-        <div class="section-title">Audio Demos</div>
+        <div class="section-title">Audio Demos (VCTK 4 kHz-to-48 kHz)</div>
         
-<!-- REPLACEMENT -->
-        <div class="file-section">
-            <div class="file-header">
-                <div class="file-title">Audio Sample</div>
+        <div id="demo-cases"></div>
+    </div>
+
+    <!-- Progressive Learning Strategy Section -->
+    <div class="narrow-container">
+        <div class="method-section">
+            <h2>Progressive Learning Strategy</h2>
+            <div class="method-text">
+                <p>High-frequency reconstruction is difficult because many plausible details can match the same narrow-band input. When a model is asked to predict all fine structures at once, it may create sharp but unstable patterns that sound metallic or artificially tonal. Our progressive learning strategy avoids this by turning the task into a coarse-to-fine reconstruction process.</p>
+
+                <p>The figure below shows the key idea. Each image is an intermediate spectral target used to supervise one stage of the network. The target starts very smooth, capturing only the broad high-frequency envelope, and then gradually becomes sharper. This gives early blocks a simpler objective and lets deeper blocks focus on precise harmonic details.</p>
             </div>
-            
-            <div class="audio-grid">
-                <div class="audio-card">
-                    <div class="card-title">Unprocessed</div>
-                    <div class="card-image">
-                        <img src="audio_figs/Unprocessed.png" alt="Unprocessed">
-                    </div>
-                    <div class="card-audio">
-                        <audio controls>
-                            <source src="audio_examples/Unprocessed.wav" type="audio/wav">
-                            Your browser does not support the audio element.
-                        </audio>
-                    </div>
-                </div>
-                
-                <div class="audio-card">
-                    <div class="card-title">AERO</div>
-                    <div class="card-image">
-                        <img src="audio_figs/AERO.png" alt="AERO">
-                    </div>
-                    <div class="card-audio">
-                        <audio controls>
-                            <source src="audio_examples/AERO.wav" type="audio/wav">
-                            Your browser does not support the audio element.
-                        </audio>
-                    </div>
-                </div>
-                
-                <div class="audio-card">
-                    <div class="card-title">APBWE</div>
-                    <div class="card-image">
-                        <img src="audio_figs/APBWE.png" alt="APBWE">
-                    </div>
-                    <div class="card-audio">
-                        <audio controls>
-                            <source src="audio_examples/APBWE.wav" type="audio/wav">
-                            Your browser does not support the audio element.
-                        </audio>
-                    </div>
-                </div>
+
+            <div class="progressive-figures" aria-label="Progressive spectral targets from coarse to fine">
+                <figure>
+                    <img src="pl_figs/spec_kernel_257.png" alt="Coarse progressive target with window size 257">
+                    <figcaption>W = 257<br><span>Coarse envelope</span></figcaption>
+                </figure>
+                <figure>
+                    <img src="pl_figs/spec_kernel_65.png" alt="Intermediate progressive target with window size 65">
+                    <figcaption>W = 65<br><span>Reduced smoothing</span></figcaption>
+                </figure>
+                <figure>
+                    <img src="pl_figs/spec_kernel_17.png" alt="Intermediate progressive target with window size 17">
+                    <figcaption>W = 17<br><span>Harmonic contours emerge</span></figcaption>
+                </figure>
+                <figure>
+                    <img src="pl_figs/spec_kernel_5.png" alt="Fine progressive target with window size 5">
+                    <figcaption>W = 5<br><span>Fine local details</span></figcaption>
+                </figure>
+                <figure>
+                    <img src="pl_figs/spec_kernel_1.png" alt="Final target spectrogram">
+                    <figcaption>Target<br><span>Clean HR magnitude</span></figcaption>
+                </figure>
             </div>
-            
-            <div class="audio-grid second-row">
-                <div class="audio-card">
-                    <div class="card-title">BAENet</div>
-                    <div class="card-image">
-                        <img src="audio_figs/BAENet.png" alt="BAENet">
-                    </div>
-                    <div class="card-audio">
-                        <audio controls>
-                            <source src="audio_examples/BAENet.wav" type="audio/wav">
-                            Your browser does not support the audio element.
-                        </audio>
-                    </div>
-                </div>
-                
-                <div class="audio-card">
-                    <div class="card-title">Ours</div>
-                    <div class="card-image">
-                        <img src="audio_figs/Ours.png" alt="Ours">
-                    </div>
-                    <div class="card-audio">
-                        <audio controls>
-                            <source src="audio_examples/Ours.wav" type="audio/wav">
-                            Your browser does not support the audio element.
-                        </audio>
-                    </div>
-                </div>
-                
-                <div class="audio-card">
-                    <div class="card-title">Target (Clean)</div>
-                    <div class="card-image">
-                        <img src="audio_figs/Target.png" alt="Target">
-                    </div>
-                    <div class="card-audio">
-                        <audio controls>
-                            <source src="audio_examples/Target.wav" type="audio/wav">
-                            Your browser does not support the audio element.
-                        </audio>
-                    </div>
-                </div>
+
+            <div class="method-text method-followup">
+                <p>With <strong>W = 257</strong>, the target suppresses narrow local fluctuations and emphasizes the overall spectral shape. This is useful at the beginning of the network, where the model should learn where high-frequency energy should broadly appear. As the window becomes smaller, the supervision preserves more frequency-local structure: first rough harmonic bands, then sharper ridges, and finally the exact clean target.</p>
+
+                <p>In practice, this means the network does not have to hallucinate the full high-frequency spectrum in one jump. It first learns a stable residual pattern, then refines that pattern stage by stage. The final stage uses <strong>W = 1</strong>, so the progressive target becomes the original clean high-resolution magnitude spectrogram.</p>
             </div>
         </div>
     </div>
+
+    <script>
+        const cases = [
+            { assetDir: 'demo_assets/case_01', raw: 'p360_006_mic1.wav' },
+            { assetDir: 'demo_assets/case_02', raw: 'p360_007_mic1.wav' },
+            { assetDir: 'demo_assets/case_03', raw: 'p360_008_mic1.wav' },
+            { assetDir: 'demo_assets/case_04', raw: 'p360_009_mic1.wav' },
+            { assetDir: 'demo_assets/case_05', raw: 'p360_010_mic1.wav' },
+            { assetDir: 'demo_assets/case_06', raw: 'p360_011_mic1.wav' },
+        ];
+
+        const methods = [
+            { name: 'Unprocessed', label: 'Unprocessed' },
+            { name: 'AERO', label: 'AERO' },
+            { name: 'APBWE', label: 'APBWE' },
+            { name: 'BAENet', label: 'BAENet' },
+            { name: 'Ours', label: 'Ours' },
+            { name: 'Target', label: 'Target (Clean)' },
+        ];
+
+        const demoCases = document.getElementById('demo-cases');
+
+        cases.forEach((item, caseIndex) => {
+            const section = document.createElement('div');
+            section.className = 'file-section';
+
+            const header = document.createElement('div');
+            header.className = 'file-header';
+            header.innerHTML = `
+                <div class="file-title">Case ${caseIndex + 1}</div>
+                <div class="file-meta">Raw file: ${item.raw}</div>
+            `;
+            section.appendChild(header);
+
+            for (let row = 0; row < 2; row += 1) {
+                const grid = document.createElement('div');
+                grid.className = row === 0 ? 'audio-grid' : 'audio-grid second-row';
+
+                methods.slice(row * 3, row * 3 + 3).forEach((method) => {
+                    const basePath = `${item.assetDir}/${method.name}`;
+                    const card = document.createElement('div');
+                    card.className = 'audio-card';
+                    card.innerHTML = `
+                        <div class="card-title">${method.label}</div>
+                        <div class="card-image">
+                            <img src="${basePath}.png" alt="${method.label} spectrogram for ${item.raw}">
+                        </div>
+                        <div class="card-audio">
+                            <audio controls>
+                                <source src="${basePath}.wav" type="audio/wav">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                section.appendChild(grid);
+            }
+
+            demoCases.appendChild(section);
+        });
+    </script>
 </body>
 </html>
